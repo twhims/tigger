@@ -1,0 +1,152 @@
+openapi: 3.1.0
+info:
+  title: Text Analysis API
+  description: API for performing various text analysis tasks, including thematic analysis, keyword frequency analysis, entity recognition, and sentiment analysis.
+  version: 1.0.0
+servers:
+  - url: https://localhost
+    description: Local server for testing
+components:
+  schemas: {}  # Adding an empty schemas object to satisfy the requirement
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []
+paths:
+  /thematic-analysis:
+    post:
+      operationId: thematicAnalysis
+      summary: Perform thematic analysis on provided text data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text_data:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of text strings to analyze.
+      responses:
+        '200':
+          description: Theme counts based on the provided text.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trust:
+                    type: integer
+                    description: Count of occurrences related to "trust" theme.
+                  transparency:
+                    type: integer
+                    description: Count of occurrences related to "transparency" theme.
+                  communication:
+                    type: integer
+                    description: Count of occurrences related to "communication" theme.
+  /keyword-frequency-analysis:
+    post:
+      operationId: keywordFrequencyAnalysis
+      summary: Perform keyword frequency analysis on provided text data.
+      description: Analyzes text for most common keywords, excluding stop words, and returns the top 10 keywords with their frequencies.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text_data:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of text strings to analyze.
+      responses:
+        '200':
+          description: Most common keywords and their frequencies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    keyword:
+                      type: string
+                      description: The keyword text.
+                    frequency:
+                      type: integer
+                      description: Frequency of the keyword in text data.
+  /entity-recognition:
+    post:
+      operationId: entityRecognition
+      summary: Perform entity recognition on provided text data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text_data:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of text strings to analyze.
+      responses:
+        '200':
+          description: Named entities and their types.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    text:
+                      type: string
+                      description: Entity text.
+                    entity_type:
+                      type: string
+                      description: Type of entity (e.g., PERSON, ORG).
+  /sentiment-analysis:
+    post:
+      operationId: sentimentAnalysis
+      summary: Perform sentiment analysis on provided text data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text_data:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of text strings to analyze.
+      responses:
+        '200':
+          description: Sentiment and polarity score for each text item.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    text:
+                      type: string
+                      description: Original text analyzed.
+                    sentiment:
+                      type: string
+                      description: Sentiment classification (Positive, Neutral, Negative).
+                    polarity_score:
+                      type: number
+                      format: float
+                      description: Sentiment polarity score ranging from -1 to +1.
