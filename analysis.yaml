@@ -4,8 +4,8 @@ info:
   description: API for performing various text analysis tasks, including thematic analysis, keyword frequency analysis, entity recognition, and sentiment analysis.
   version: 1.0.0
 servers:
-  - url: https://localhost
-    description: Local server for testing
+  - url: https://github.com/twhims/tigger/blob/main/analysis.yaml
+    description: 
 components:
   schemas: {}  # Adding an empty schemas object to satisfy the requirement
   securitySchemes:
